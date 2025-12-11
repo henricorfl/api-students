@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/henricorfl/api-students/db"
-
+	
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -31,24 +31,15 @@ func main() {
 
 // Handler
 func getStudents(c echo.Context) error {
-	students, err := db.GetStudents()
-	if err != nil {
-		return c.String(http.StatusNotFound, "Failed to get students")
-	}
-
-	return c.JSON(http.StatusOK, students)
+	return c.String(http.StatusOK, "List of all students")
 }
 
 func createStudent(c echo.Context) error {
-	student := db.Student{}
-	if err := c.Bind(&student); err != nil {
+	student := db.Student {}
+	if err := c.Bind(&student); err != nil{
 		return err
 	}
-
-	if err := db.AddStudent(student); err != nil {
-		return c.String(http.StatusInternalServerError, "Error to create student")
-	}
-
+	db.AddStudent(student)
 	return c.String(http.StatusOK, "Create student")
 }
 
